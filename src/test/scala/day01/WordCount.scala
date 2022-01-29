@@ -5,13 +5,13 @@ import org.apache.spark.{SparkConf, SparkContext}
 object WordCount {
   def main(args: Array[String]): Unit = {
     // 创建sc实例
-    val conf = new SparkConf()
+    val conf = new SparkConf().setMaster("local[4]")
       .setAppName("wordCount")
 
     val sc = new SparkContext(conf)
 
     // 读源
-    val tuples = sc.textFile("file:///root/log.log")
+    val tuples = sc.textFile("src/data/core/words.txt",4)
       // 转换算子
       .flatMap(_.split(" "))
       .map((_, 1))
